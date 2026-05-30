@@ -3,8 +3,13 @@ import { useState } from "react";
 
 const LoginPage = () => {
   const [isSignIn, setIsSignIn] = useState(false);
+
+  const handleLoginLogoutToggle = () => {
+    setIsSignIn(!isSignIn);
+  };
+
   return (
-    <div className="border-2 border-white space-y-3 md:space-y-5">
+    <div className="border- border-white space-y-3 md:space-y-5 w-full">
       <div className="flex flex-col space-y-2">
         <h1 className="text-white font-bold text-2xl md:text-4xl flex tracking-tight">
           Enter your info to sign in
@@ -26,26 +31,32 @@ const LoginPage = () => {
         />
       </div>
       <div className="flex flex-col space-y-2 md:space-y-4 items-center w-full">
-        {!isSignIn ? (
-          <button className="flex justify-center text-lg md:text-2xl cursor-pointer bg-red-600 hover:bg-red-700 text-white font-bold rounded-md w-full px-4 py-3 transition-all ease-in-out duration-200">
+        {isSignIn ? (
+          <button className="flex justify-center text-lg md:text-xl cursor-pointer bg-red-600 hover:bg-red-700 text-white font-bold rounded-md w-full px-4 py-3 transition-all ease-in-out duration-200">
             Sign In
           </button>
         ) : (
-          <button className="flex justify-center text-lg md:text-2xl cursor-pointer bg-red-600 hover:bg-red-700 text-white font-bold rounded-md w-full px-4 py-3 transition-all ease-in-out duration-200">
-            Sign Out
+          <button className="flex justify-center text-lg md:text-xl cursor-pointer bg-red-600 hover:bg-red-700 text-white font-bold rounded-md w-full px-4 py-3 transition-all ease-in-out duration-200">
+            Sign up
           </button>
         )}
       </div>
       <div className="flex flex-col space-y-2 md:space-y-3">
-        {isSignIn ? (
-          <p className="flex cursor-pointer text-white font-semibold text-left">
-            New to Nextflix? <span>Sign Up</span>
-          </p>
-        ) : (
-          <p className="flex cursor-pointer text-white font-semibold text-left">
-            Already a user? <span>Sign In</span>
-          </p>
-        )}
+        <p
+          className="flex cursor-pointer text-white font-semibold text-left"
+          onClick={handleLoginLogoutToggle}
+        >
+          {isSignIn ? (
+            <>
+              New to Nextflix?
+              <span className="px-1 font-bold">Sign Up</span>
+            </>
+          ) : (
+            <>
+              Already a user?<span className="px-1 font-bold">Sign In</span>
+            </>
+          )}
+        </p>
       </div>
     </div>
   );
