@@ -1,0 +1,15 @@
+const Header = () => {
+  return (
+    <header className="flex border-b w-full items-center border-b-mauve-700 h- px-5 py-1 md:px-10 md:py-2 overflow-hidden">
+      <div className="flex md:max-w-7xl w-full mx-auto">
+        <img
+          src="https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production_2026-05-14/consent/87b6a5c0-0104-4e96-a291-092c11350111/019ae4b5-d8fb-7693-90ba-7a61d24a8837/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
+          alt="nextflix-logo"
+          className="flex w-20 md:w-48"
+        />
+      </div>
+    </header>
+  );
+};
+
+export default Header;
