@@ -6,7 +6,11 @@ import Login from "./LoginPage";
 
 const Body = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  return <div className="">{!isAuthenticated ? <Login /> : <Browse />}</div>;
+  return (
+    <div className="w-full px-2 md:px-10">
+      {!isAuthenticated ? <Login /> : <Browse />}
+    </div>
+  );
 };
 
 export default Body;

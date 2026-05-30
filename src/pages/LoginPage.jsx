@@ -9,7 +9,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="border- border-white space-y-3 md:space-y-5 w-full">
+    <div className="space-y-3 md:space-y-5 w-full max-w-100 mx-auto">
       <div className="flex flex-col space-y-2">
         <h1 className="text-white font-bold text-2xl md:text-4xl flex tracking-tight">
           Enter your info to sign in
@@ -23,6 +23,7 @@ const LoginPage = () => {
           type="email"
           className="flex px-4 py-3 bg-gray-950 font-semibold text-gray-100 border border-gray-700 rounded-md w-full"
           placeholder="Enter Email"
+          autoComplete="off"
         />
         <input
           type="password"
@@ -41,7 +42,7 @@ const LoginPage = () => {
           </button>
         )}
       </div>
-      <div className="flex flex-col space-y-2 md:space-y-3">
+      <div className="flex flex-col space-y-2 md:space-y-3 w-fit">
         <p
           className="flex cursor-pointer text-white font-semibold text-left"
           onClick={handleLoginLogoutToggle}
@@ -49,11 +50,11 @@ const LoginPage = () => {
           {isSignIn ? (
             <>
               New to Nextflix?
-              <span className="px-1 font-bold">Sign Up</span>
+              <span className="px-1 font-bold">Sign Up.</span>
             </>
           ) : (
             <>
-              Already a user?<span className="px-1 font-bold">Sign In</span>
+              Already a user?<span className="px-1 font-bold">Sign In.</span>
             </>
           )}
         </p>
