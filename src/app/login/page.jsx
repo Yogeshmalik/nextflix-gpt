@@ -9,6 +9,7 @@ const Login = async () => {
   } = await supabase.auth.getUser();
 
   if (user) {
+    console.log("user", user)
     redirect("/browse");
   }
 
