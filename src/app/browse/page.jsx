@@ -1,4 +1,4 @@
-import BrowsePage from "@/pages/BrowsePage";
+import BrowsePage from "@/app/browse/BrowsePage";
 import React from "react";
 
 const Browse = () => {

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Browse from "../app/browse/page";
-import Login from "./LoginPage";
+import Login from "../app/login/LoginPage";
 
 const Body = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
