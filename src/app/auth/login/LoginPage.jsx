@@ -1,58 +1,74 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { login, signup } from "./actions";
+import { checkValidData } from "@/utils/validate";
 
 const LoginPage = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [status, setStatus] = useState("");
-  const [isLoading, setIsLoading]= useState(false)
+  const [supabaseStatusMessage, setSupabaseStatusMessage] = useState("");
+  const [validateEmailMessage, setValidateEmailMessage] = useState("");
+  const [validatePasswordMessage, setValidatePasswordMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLoginLogoutToggle = () => {
     setIsSignIn(!isSignIn);
-    setStatus("");
+    setSupabaseStatusMessage("");
   };
 
   const handleLogin = async (formData) => {
-    setStatus("Signing in...");
+    setSupabaseStatusMessage("Signing in...");
     setIsLoading(true);
     try {
       const res = await login(formData);
       if (res?.error) {
-        console.error(res.error);
-        setStatus(res.error);
+        // console.error(res.error);
+        setSupabaseStatusMessage(res.error);
       }
-      if (res?.success) setStatus(res.success);
+      if (res?.success) setSupabaseStatusMessage(res.success);
     } catch (error) {
-      setStatus("An error occurred. Please try again.");
-      console.error(error);
+      setSupabaseStatusMessage("An error occurred. Please try again.");
+      // console.error(error);
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const handleSignup = async (formData) => {
-    setStatus("Signing up...");
+    setSupabaseStatusMessage("Signing up...");
     setIsLoading(true);
     try {
       const res = await signup(formData);
       if (res?.error) {
-        console.error(res.error);
-        setStatus(res.error);
+        // console.error(res.error);
+        setSupabaseStatusMessage(res.error);
       }
-      if (res?.success) setStatus(res.success);
+      if (res?.success) setSupabaseStatusMessage(res.success);
     } catch (error) {
-      setStatus("An error occurred. Please try again.");
-      console.error(error);
+      setSupabaseStatusMessage("An error occurred. Please try again.");
+      // console.error(error);
     } finally {
       setIsLoading(false);
     }
-  }
+  };
+
+  const emailInputValue = useRef(null);
+  const passwordInputValue = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Call the function once and destructure the errors from the returned object
+    const { emailValidateError, passwordValidateError } = checkValidData(
+      emailInputValue.current.value,
+      passwordInputValue.current.value,
+    );
+
+    setValidateEmailMessage(emailValidateError);
+    setValidatePasswordMessage(passwordValidateError);
+
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
@@ -81,6 +97,7 @@ const LoginPage = () => {
       <form
         className="flex flex-col space-y-2 md:space-y-4 items-center w-full"
         onSubmit={handleSubmit}
+        autoComplete="off"
       >
         {!isSignIn && (
           <input
@@ -97,26 +114,33 @@ const LoginPage = () => {
 
         <input
           type="email"
+          ref={emailInputValue}
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="flex px-4 py-3 bg-gray-950 font-semibold text-gray-100 border border-gray-700 rounded-md w-full focus:outline-none focus:border-red-600 transition"
           placeholder="Enter Email"
-          autoComplete="email"
+          autoComplete="off"
           required
         />
+        <span className="flex -mt-4 text-red-600 font-semibold text-left w-full px-1">
+          {validateEmailMessage}
+        </span>
 
         <input
           type="password"
+          ref={passwordInputValue}
           name="password"
-          minLength={6}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="flex px-4 py-3 bg-gray-950 font-semibold text-gray-100 border border-gray-700 rounded-md w-full focus:outline-none focus:border-red-600 transition"
-          placeholder="Enter Password (At least 6 characters)"
-          autoComplete={isSignIn ? "current-password" : "new-password"}
+          placeholder="Enter Password (At least 8 characters)"
+          autoComplete="new-password"
           required
         />
+        <span className="flex -mt-4 text-red-600 font-semibold text-left w-full px-1">
+          {validatePasswordMessage}
+        </span>
 
         <div className="flex flex-col space-y-2 md:space-y-4 items-center w-full">
           <button
@@ -151,17 +175,18 @@ const LoginPage = () => {
             )}
           </button>
 
-          {status && (
+          {supabaseStatusMessage && (
             <p
               className={`mt-2 text-lg font-semibold text-center ${
-                status.includes("Check") || status.includes("success")
+                supabaseStatusMessage.includes("Check") ||
+                supabaseStatusMessage.includes("success")
                   ? "text-green-500"
                   : "text-red-600"
               }`}
-              role="status"
+              role="supabaseStatusMessage"
               aria-live="polite"
             >
-              {status}
+              {supabaseStatusMessage}
             </p>
           )}
         </div>
