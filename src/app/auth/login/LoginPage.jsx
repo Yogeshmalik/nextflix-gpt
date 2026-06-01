@@ -16,6 +16,8 @@ const LoginPage = () => {
   const handleLoginLogoutToggle = () => {
     setIsSignIn(!isSignIn);
     setSupabaseStatusMessage("");
+    setValidateEmailMessage("");
+    setValidatePasswordMessage("");
   };
 
   const handleLogin = async (formData) => {
@@ -83,6 +85,16 @@ const LoginPage = () => {
     }
   };
 
+  // Evaluate the current state of email and password on every keystroke
+  const { emailValidateError, passwordValidateError } = checkValidData(
+    email,
+    password,
+  );
+
+  // If either of these are NOT null, it means there is an error and the form is invalid
+  const isFormInvalid =
+    emailValidateError !== null || passwordValidateError !== null;
+
   return (
     <div className="space-y-3 md:space-y-5 w-full max-w-100 mx-auto">
       <div className="flex flex-col space-y-2">
@@ -118,7 +130,8 @@ const LoginPage = () => {
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="flex px-4 py-3 bg-gray-950 font-semibold text-gray-100 border border-gray-700 rounded-md w-full focus:outline-none focus:border-red-600 transition"
+          className={`flex px-4 py-3 bg-gray-950 font-semibold text-gray-100 border border-gray-700 rounded-md w-full focus:outline-none transition 
+            ${supabaseStatusMessage ? "border-red-600" : "focus:border-white"}`}
           placeholder="Enter Email"
           autoComplete="off"
           required
@@ -133,7 +146,8 @@ const LoginPage = () => {
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="flex px-4 py-3 bg-gray-950 font-semibold text-gray-100 border border-gray-700 rounded-md w-full focus:outline-none focus:border-red-600 transition"
+          className={`flex px-4 py-3 bg-gray-950 font-semibold text-gray-100 border border-gray-700 rounded-md w-full focus:outline-none focus:border-red-600 transition 
+            ${supabaseStatusMessage ? "border-red-600" : "focus:border-white"}`}
           placeholder="Enter Password (At least 8 characters)"
           autoComplete="new-password"
           required
@@ -145,6 +159,7 @@ const LoginPage = () => {
         <div className="flex flex-col space-y-2 md:space-y-4 items-center w-full">
           <button
             type="submit"
+            // disabled={isLoading || isFormInvalid}
             disabled={isLoading}
             className="flex justify-center text-lg md:text-xl cursor-pointer bg-red-600 hover:bg-red-700 disabled:bg-red-700 disabled:opacity-50 text-white font-bold rounded-md w-full px-4 py-3 transition-all ease-in-out duration-200"
           >
@@ -177,7 +192,7 @@ const LoginPage = () => {
 
           {supabaseStatusMessage && (
             <p
-              className={`mt-2 text-lg font-semibold text-center ${
+              className={` text-lg font-semibold text-left w-full ${
                 supabaseStatusMessage.includes("Check") ||
                 supabaseStatusMessage.includes("success")
                   ? "text-green-500"
@@ -192,7 +207,7 @@ const LoginPage = () => {
         </div>
       </form>
 
-      <div className="flex flex-col space-y-2 md:space-y-3 w-fit">
+      <div className="flex flex-col -mt-2 space-y-2 md:space-y-3 w-fit">
         <p
           className="flex cursor-pointer text-white font-semibold text-left hover:opacity-80 transition"
           onClick={handleLoginLogoutToggle}
