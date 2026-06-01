@@ -59,17 +59,56 @@ const LoginPage = () => {
   const emailInputValue = useRef(null);
   const passwordInputValue = useRef(null);
 
+  const handleEmailChange = (e) => {
+    const val = e.target.value;
+    setEmail(val);
+
+    // If there's an error and they fix it, remove the error immediately
+    const { emailValidateError } = checkValidData(val, password);
+    if (!emailValidateError) {
+      setValidateEmailMessage("");
+    } else if (validateEmailMessage) {
+      setValidateEmailMessage(emailValidateError);
+    }
+  };
+
+  const handleEmailBlur = () => {
+    const { emailValidateError } = checkValidData(email, password);
+    setValidateEmailMessage(emailValidateError);
+  };
+
+  const handlePasswordChange = (e) => {
+    const val = e.target.value;
+    setPassword(val);
+
+    // If there's an error and they fix it, remove the error immediately
+    const { passwordValidateError } = checkValidData(email, val);
+    if (!passwordValidateError) {
+      setValidatePasswordMessage("");
+    } else if (validatePasswordMessage) {
+      setValidatePasswordMessage(passwordValidateError);
+    }
+  };
+
+  const handlePasswordBlur = () => {
+    const { passwordValidateError } = checkValidData(email, password);
+    setValidatePasswordMessage(passwordValidateError);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Call the function once and destructure the errors from the returned object
     const { emailValidateError, passwordValidateError } = checkValidData(
-      emailInputValue.current.value,
-      passwordInputValue.current.value,
+      email,
+      password,
     );
 
     setValidateEmailMessage(emailValidateError);
     setValidatePasswordMessage(passwordValidateError);
+
+    // Stop submission if form is invalid
+    if (emailValidateError || passwordValidateError) return;
 
     const formData = new FormData();
     formData.append("email", email);
@@ -129,7 +168,8 @@ const LoginPage = () => {
           ref={emailInputValue}
           name="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleEmailChange}
+          onBlur={handleEmailBlur}
           className={`flex px-4 py-3 bg-gray-950 font-semibold text-gray-100 border border-gray-700 rounded-md w-full focus:outline-none transition 
             ${supabaseStatusMessage ? "border-red-600" : "focus:border-white"}`}
           placeholder="Enter Email"
@@ -145,7 +185,8 @@ const LoginPage = () => {
           ref={passwordInputValue}
           name="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handlePasswordChange}
+          onBlur={handlePasswordBlur}
           className={`flex px-4 py-3 bg-gray-950 font-semibold text-gray-100 border border-gray-700 rounded-md w-full focus:outline-none focus:border-red-600 transition 
             ${supabaseStatusMessage ? "border-red-600" : "focus:border-white"}`}
           placeholder="Enter Password (At least 8 characters)"
