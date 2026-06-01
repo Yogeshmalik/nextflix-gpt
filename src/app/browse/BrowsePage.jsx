@@ -1,37 +1,27 @@
-import React from "react";
-import { createClient } from "@/utils/supabase/server";
-import { signout } from "@/app/login/actions";
-import Link from "next/link";
+"use client";
 
-const BrowsePage = async () => {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+import React from "react";
+import { signout } from "@/app/auth/login/actions";
+import { useAuth } from "@/utils/providers/AuthProvider";
+
+const BrowsePage = () => {
+  const { user } = useAuth();
 
   return (
     <div className="p-10 text-white">
       <h1 className="text-3xl font-bold text-center">Browse Page</h1>
       {user ? (
-        <div className="mt- space-y-4">
-          <p>Welcome, {user.user_metadata?.full_name || user.email}!</p>
+        <div className="mt-6 space-y-4 max-w-md mx-auto">
+          <p className="text-lg">
+            Welcome, {user.user_metadata?.full_name || user.email}!
+          </p>
           <form action={signout}>
-            <button className="bg-red-600 px-4 py-2 rounded text-white font-bold transition hover:bg-red-700">
+            <button className="bg-red-600 cursor-pointer px-4 py-2 rounded text-white font-bold transition-all duration-200 hover:bg-red-700 w-full">
               Sign Out
             </button>
           </form>
         </div>
-      ) : (
-        <div className="mt-4 space-y- items-center flex flex-col">
-          <p className="py-4">Please log in to view this page.</p>
-          <Link
-            href="/login"
-            className="bg-red-600 px-4 py-2 rounded text-white font-bold transition hover:bg-red-700"
-          >
-            Sign In
-          </Link>
-        </div>
-      )}
+      ) : null}
     </div>
   );
 };

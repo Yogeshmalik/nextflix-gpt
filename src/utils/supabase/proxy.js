@@ -1,5 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function updateSession(request) {
   let supabaseResponse = NextResponse.next({
@@ -32,13 +32,32 @@ export async function updateSession(request) {
     },
   );
 
-  // Do not run code between createServerClient and
-  // supabase.auth.getClaims(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
+  // getUser() validates the user securely and triggers the session refresh
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  // IMPORTANT: If you remove getClaims() and you use server-side rendering
-  // with the Supabase client, your users may be randomly logged out.
-  await supabase.auth.getClaims();
+  // Handle global route protection based on authentication status
+  const isAuthRoute = request.nextUrl.pathname.startsWith("/auth");
+  const isProtectedRoute = request.nextUrl.pathname.startsWith("/browse");
+
+  let redirectUrl = null;
+  if (!user && isProtectedRoute) {
+    redirectUrl = new URL("/auth/login", request.url);
+  } else if (user && isAuthRoute) {
+    redirectUrl = new URL("/browse", request.url);
+  }
+
+  if (redirectUrl) {
+    const redirectResponse = NextResponse.redirect(redirectUrl);
+
+    // Crucial: Copy the refreshed cookies to the new redirect response
+    supabaseResponse.cookies.getAll().forEach((cookie) => {
+      redirectResponse.cookies.set(cookie.name, cookie.value, cookie);
+    });
+
+    return redirectResponse;
+  }
 
   return supabaseResponse;
 }
