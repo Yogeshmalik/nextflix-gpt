@@ -4,6 +4,7 @@ import SharedLayout from "@/components/SharedLayout";
 import { createClient } from "@/utils/supabase/server";
 import { AuthProvider } from "@/utils/providers/AuthProvider";
 import StoreProvider from "./StoreProvider";
+import { AuthListener } from "./auth/AuthListener";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default async function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         <StoreProvider>
           <AuthProvider user={user}>
+            <AuthListener serverUser={user} />
             <SharedLayout>{children}</SharedLayout>
           </AuthProvider>
         </StoreProvider>
