@@ -3,6 +3,7 @@ import "./globals.css";
 import SharedLayout from "@/components/SharedLayout";
 import { createClient } from "@/utils/supabase/server";
 import { AuthProvider } from "@/utils/providers/AuthProvider";
+import StoreProvider from "./StoreProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,9 +31,11 @@ export default async function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <AuthProvider user={user}>
-          <SharedLayout>{children}</SharedLayout>
-        </AuthProvider>
+        <StoreProvider>
+          <AuthProvider user={user}>
+            <SharedLayout>{children}</SharedLayout>
+          </AuthProvider>
+        </StoreProvider>
       </body>
     </html>
   );
