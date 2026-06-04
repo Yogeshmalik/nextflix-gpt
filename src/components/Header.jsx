@@ -1,37 +1,59 @@
 "use client";
 
 import { signout } from "@/app/auth/login/actions";
+import { MAIN_LOGO_URL } from "@/utils/constants";
 import { useAuth } from "@/utils/providers/AuthProvider";
-// import { useAppSelector } from "@/utils/store/hooks";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const { user } = useAuth();
-  // const loggedInUser = useAppSelector((store) => store?.user);
-  // console.log("loggedUser", loggedInUser);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="flex border-b w-full items-center border-b-mauve-700 h-auto px-2 py-3 md:px-10 md:py-2 overflow-hidden">
+    <header
+      className={`fixed top-0 left-0 flex w-full items-center border-b
+        h-auto px-2 py-3 md:px-10 md:py-2 transition-all duration-200 ease-in-out
+        ${isScrolled ? "bg-black/70 backdrop-blur-md" : "bg-transparent"}`}
+    >
       <div className="flex md:max-w-7xl w-full mx-auto items-center justify-between">
         <Link href="/browse">
           <Image
-            src="https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production_2026-05-14/consent/87b6a5c0-0104-4e96-a291-092c11350111/019ae4b5-d8fb-7693-90ba-7a61d24a8837/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
+            src={MAIN_LOGO_URL}
             alt="nextflix-logo"
             width={112}
             height={40}
             priority
-            className="w-28 md:w-48 h-auto"
+            className={` transition-all duration-200 ease-in-out
+              
+              ${isScrolled ? "w-20 md:w-28" : "w-24 md:w-44 h-auto"}`}
           />
         </Link>
-        {/* {loggedInUser && ( */}
         {user && (
           <div className="flex items-center gap-4">
             <span className="text-white text-sm md:text-base">
-              {/* {loggedInUser?.name} */}
               {user?.user_metadata?.full_name}
             </span>
             <form action={signout}>
-              <button className="bg-red-600 cursor-pointer px-4 py-2 rounded text-white font-bold transition-all duration-200 hover:bg-red-700 w-full">
+              <button
+                className={`bg-red-600 cursor-pointer rounded py-1 text-white transition-all duration-200 hover:bg-red-700 w-full
+                 ${isScrolled ? "md:px-3 md:py-1 px-2 font-semibold text-sm" : "md:px-4 md:py-2 px-3 font-bold"}
+                `}
+              >
                 Sign Out
               </button>
             </form>
