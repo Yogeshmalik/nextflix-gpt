@@ -3,17 +3,14 @@
 import React from "react";
 import { signout } from "@/app/auth/login/actions";
 import { useAuth } from "@/utils/providers/AuthProvider";
-import useMovies from "@/hooks/useMovies";
-import OrginalsHeader from "@/components/OrginalsHeader";
+import OriginalsHeader from "@/components/OriginalsHeader";
 
 const BrowsePage = () => {
-  const { movies, loading } = useMovies("now_playing", 1);
   const { user } = useAuth();
-  // console.log("movies", movies);
 
   return (
     <div className="p-10 text-white h-full">
-      <OrginalsHeader />
+      <OriginalsHeader />
       <h1 className="text-3xl font-bold text-center">Browse Page</h1>
       {user ? (
         <div className="mt-6 space-y-4 max-w-md mx-auto">
