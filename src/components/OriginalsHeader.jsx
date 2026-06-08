@@ -9,11 +9,14 @@ const OriginalsHeader = () => {
     "originals",
   );
 
+const { movies: trending } = useMovies("trending/all/day", "trending");
+
   useEffect(() => {
     if (originals && originals.length > 0) {
       console.log("My Netflix Originals List:", originals);
+      console.log("trending list:", trending);
     }
-  }, [originals]);
+  }, [originals,trending]);
 
   if (loading && (!originals || originals.length === 0))
     return <div>Loading Banner...</div>;
