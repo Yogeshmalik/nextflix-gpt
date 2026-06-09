@@ -8,11 +8,13 @@ const useMovies = (endpoint, category) => {
   const [loading, setLoading] = useState(false);
 
   // 1. Subscribe to the specific category in the Redux store
-  const storeData = useAppSelector((store) => store.movies[category]);
+  const storeData = useAppSelector((store) =>
+    category ? store.movies[category] : undefined,
+  );
 
   useEffect(() => {
-    // 2. Fetch ONLY if data doesn't exist in the store yet
-    if (!storeData || storeData.length === 0) {
+    // 2. Fetch ONLY if endpoint exists and data isn't in Redux yet (avoids infinite loops on empty arrays)
+    if (endpoint && category && storeData === undefined) {
       fetchData();
     }
   }, [endpoint, category, storeData]);

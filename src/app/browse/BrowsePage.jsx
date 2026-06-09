@@ -3,7 +3,7 @@
 import React from "react";
 import { signout } from "@/app/auth/login/actions";
 import { useAuth } from "@/utils/providers/AuthProvider";
-import OriginalsHeader from "@/components/OriginalsHeader";
+import OriginalsBanner from "@/components/OriginalsBanner";
 
 /**
  * // Netflix Originals (TV Shows from Netflix Network)
@@ -51,8 +51,8 @@ const BrowsePage = () => {
   const { user } = useAuth();
 
   return (
-    <div className="p-10 text-white h-full">
-      <OriginalsHeader />
+    <div className="p- w-full text-white h-full">
+      <OriginalsBanner />
       <h1 className="text-3xl font-bold text-center">Browse Page</h1>
       {user ? (
         <div className="mt-6 space-y-4 max-w-md mx-auto">

@@ -3,7 +3,7 @@ import React from "react";
 
 const Browse = () => {
   return (
-    <div className=" h-screen flex">
+    <div className="w-full relative h-screen flex">
       <BrowsePage />
     </div>
   );
