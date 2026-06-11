@@ -104,11 +104,13 @@ const OriginalsBanner = () => {
           ) : (
             <span className="flex items-center">No Ratings</span>
           )}
-          {randomMovie?.release_date && (
+          {randomMovie?.release_date || randomMovie?.first_air_date && (
             <span className="flex bg-gray-500 rounded-full h-1 w-1 mx-1" />
           )}
           <p className="my-auto pl-1 text-white flex items-baseline tracking-tighter">
-            {randomMovie?.release_date?.split("-")[0] || "" || randomMovie?.first_air_date?.split("-")[0]}
+            {randomMovie?.release_date?.split("-")[0] ||
+              "" ||
+              randomMovie?.first_air_date?.split("-")[0]}
           </p>
           {randomMovie?.original_language && (
             <span className="flex bg-gray-500 rounded-full h-1 w-1 mx-1" />
@@ -120,7 +122,7 @@ const OriginalsBanner = () => {
         <p
           onClick={handleTruncate}
           className={`md:pt-4 md:max-w-2xl text-sm md:text-base text-gray-400 cursor-pointer 
-            ${!overviewExpand ? "line-clamp-2 md:line-clamp-none" : ""}`}
+            ${!overviewExpand ? "line-clamp-2 md:line-clamp-3" : ""}`}
         >
           {randomMovie?.overview}
         </p>
