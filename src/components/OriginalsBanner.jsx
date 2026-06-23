@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import useMovies from "@/hooks/useMovies";
 import Button from "./Button";
+import {
+  INFO_ICON,
+  PLAY_ICON,
+  RATING_ICON,
+  getYouTubeEmbedUrl,
+} from "@/utils/constants";
 
 const OriginalsBanner = () => {
   const { movies: trending } = useMovies("trending/all/day", "trending");
@@ -64,7 +70,7 @@ const OriginalsBanner = () => {
   // }
 
   return (
-    <div className="relative overflow-hidden w-full md:h-screen text-white pt-24 p-4 md:p-8">
+    <div className="relative overflow-hidden w-full md:h-screen text-white pt-2 px-4 md:px-12">
       {/* Conditionally render the iframe only when a video is available */}
       {selectedVideo && (
         <iframe
@@ -72,27 +78,27 @@ const OriginalsBanner = () => {
           height="315"
           // Example styling for a full-screen background video
           className="inset-0 aspect-video absolute top-0 left-0 md:top-1/2 md:left-1/2 min-w-screen min-h-screen w-[177.78vh] h-[56.25vw] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-          src={`https://www.youtube.com/embed/${selectedVideo.key}?autoplay=1&mute=1&controls=0&loop=1&playlist=${selectedVideo.key}&modestbranding=1&rel=0&showinfo=0`}
+          src={getYouTubeEmbedUrl(selectedVideo.key)}
           title="YouTube video player"
           allow="autoplay"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
         ></iframe>
       )}
-      <div className="absolute h-auto md:h-screen justify-center md:pt-36 flex flex-col max-w-2xl md:max-w-[50%] w-full inset-0 z-10 bg-linear-to-r from-black via-black/50 to-transparent" />
+      <div className="absolute h-auto md:h-screen justify-center pt-20 pb-10 md:pt-1 md:pb-1 md:pt20 flex flex-col max-w-xs md:max-w-[35%] w-full inset-0 z-10 bg-linear-to-r from-black via-black/50 to-transparent" />
 
-      <div className="relative md:h-screen space-y-1 h-auto md:justify-center md:pt-36 flex flex-col max-w-sm w-full z-20 md:p-16 lg:p-28 md:max-w-[50%]">
+      <div className="relative md:h-screen space-y-1 pt-20 pb-10 md:pt-1 md:pb-5 h-auto md:justify-center px20 md:pt20 flex flex-col max-w-xs w-full z-20 md:pb28 lg:p28 md:max-w-[35%]">
         <h3 className="uppercase hidden md:block tracking-widest font-mono text-gray-400 font-semibold pl-1">
           {mediaType || ""}
         </h3>
-        <h1 className="text-3xl md:py-2 md:text-5xl font-bold">
+        <h1 className="text-xl md:py-1 md:text-5xl font-bold">
           {randomMovie?.title || randomMovie?.name}
         </h1>
-        <span className="flex space-x-1 font-mono text-base items-center font-bold md:pt-4">
+        <span className="flex space-x-1 font-mono text-base items-center font-bold">
           {randomMovie?.vote_average ? (
             <span className="flex space-x-1 items-center">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Star_Green.svg/250px-Star_Green.svg.png"
+                src={RATING_ICON}
                 alt="star rating icon"
                 className="flex w-4 h-4"
               />
@@ -104,13 +110,13 @@ const OriginalsBanner = () => {
           ) : (
             <span className="flex items-center">No Ratings</span>
           )}
-          {randomMovie?.release_date || randomMovie?.first_air_date && (
+          {(randomMovie?.release_date || randomMovie?.first_air_date) && (
             <span className="flex bg-gray-500 rounded-full h-1 w-1 mx-1" />
           )}
           <p className="my-auto pl-1 text-white flex items-baseline tracking-tighter">
-            {randomMovie?.release_date?.split("-")[0] ||
-              "" ||
-              randomMovie?.first_air_date?.split("-")[0]}
+            {randomMovie?.release_date
+              ? randomMovie?.release_date?.split("-")[0] || ""
+              : randomMovie?.first_air_date?.split("-")[0] || ""}
           </p>
           {randomMovie?.original_language && (
             <span className="flex bg-gray-500 rounded-full h-1 w-1 mx-1" />
@@ -121,20 +127,26 @@ const OriginalsBanner = () => {
         </span>
         <p
           onClick={handleTruncate}
-          className={`md:pt-4 md:max-w-2xl text-sm md:text-base text-gray-400 cursor-pointer 
-            ${!overviewExpand ? "line-clamp-2 md:line-clamp-3" : ""}`}
+          className={`md:pt-1 md:max-w-2xl text-sm md:text-base text-gray-400 cursor-pointer 
+            ${!overviewExpand ? "line-clamp-2 hidden md:line-clamp-3" : ""}`}
         >
           {randomMovie?.overview}
         </p>
         <div className="flex space-x-3 py-2 md:py-4 w-full">
           <Button
-            className="bg-white hover:opacity-85 text-black"
-            src="https://png.pngtree.com/png-vector/20190419/ourmid/pngtree-vector-play-icon-png-image_956416.jpg"
+            type="submit"
+            color="white"
+            size="large"
+            className="hover:opacity-85"
+            src={PLAY_ICON}
             label="Play"
           />
           <Button
-            className="bg-zinc-600 opacity-80 hover:opacity-75 text-white"
-            src="https://tsk-rlp.de/wp-content/uploads/2023/11/600px-Infobox_info_icon_white.svg.png"
+            type="submit"
+            color="zinc"
+            size="large"
+            className="opacity-80 hover:opacity-75"
+            src={INFO_ICON}
             label="More Info"
           />
         </div>
