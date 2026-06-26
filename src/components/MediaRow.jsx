@@ -10,7 +10,7 @@ const MediaRow = ({ rowTitle, media }) => {
       <p className="my-2 md:my-4 text-xl md:text-2xl border-l-4 pl-2 font-bold border-red-500">
         {rowTitle}
       </p>
-      <div className="flex py-4 overflow-x-scroll overflow-y-hidden scroll-smooth scrollbar-none -ml- rounded-md ">
+      <div className="flex py-4 overflow-x-scroll overflow-y-hidden scroll-smooth scrollbar-none -ml- pl-2 rounded-md ">
         {media?.map((item) => (
           <MediaCard key={item?.id} posterPath={item?.poster_path} />
         ))}

@@ -135,7 +135,7 @@ const LoginPage = () => {
     emailValidateError !== null || passwordValidateError !== null;
 
   return (
-    <div className="space-y-5 w-full max-w-100 mx-auto">
+    <div className="space-y-5 w-full max-w-100 mx-auto h-full my-auto pb-8">
       <div className="flex flex-col space-y-2">
         <h1 className="text-white font-bold text-2xl md:text-4xl flex tracking-tight">
           Enter your info to sign in

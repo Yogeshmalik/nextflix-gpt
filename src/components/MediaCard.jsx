@@ -1,5 +1,4 @@
 import { IMG_CDN_URL } from "@/utils/constants";
-import React from "react";
 
 const MediaCard = ({ posterPath }) => {
   // Don't render the card if there's no poster

@@ -17,8 +17,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "NextflixGPT",
-  description: "Yogesh SM",
+  title: "Nextflix GPT",
+  description: "A movie and TV Shows app powered by AI",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    viewportFit: "cover",
+  },
 };
 
 export default async function RootLayout({ children }) {

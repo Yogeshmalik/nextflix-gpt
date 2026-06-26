@@ -27,8 +27,9 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 z-50 flex w-full items-center
-        h-auto px-2 py-3 md:px-12 md:py-2 transition-all duration-200 ease-in-out
+      className={`fixed top-0 left-0 z-50 flex w-full items-center h-auto
+        px-2 pt-[calc(env(safe-area-inset-top,0.75rem))] pb-3
+        md:px-12 md:pt-[calc(env(safe-area-inset-top,0.5rem))] md:pb-2 transition-all duration-200 ease-in-out
         ${isScrolled ? "bg-black/70 backdrop-blur-md" : "bg-transparent"}`}
     >
       <div className="flex md:max-w-7x w-full mx-auto items-center justify-between">
