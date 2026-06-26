@@ -50,7 +50,7 @@ const BrowsePage = () => {
   // const { user } = useAuth();
 
   return (
-    <div className="p- w-full text-white h-full">
+    <div className="w-full text-white h-full pb-20">
       <OriginalsBanner />
       <MediaContainer />
     </div>

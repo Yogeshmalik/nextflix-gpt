@@ -5,11 +5,13 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: '**',
+        protocol: "https",
+        hostname: "**",
       },
     ],
+    // unoptimized: true,
   },
+  allowedDevOrigins: ["192.168.1.48"],
 };
 
 export default nextConfig;

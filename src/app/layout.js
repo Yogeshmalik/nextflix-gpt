@@ -19,11 +19,13 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Nextflix GPT",
   description: "A movie and TV Shows app powered by AI",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    viewportFit: "cover",
-  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: "cover",
 };
 
 export default async function RootLayout({ children }) {
@@ -36,7 +38,7 @@ export default async function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full w-full flex flex-col">
         <StoreProvider>
           <AuthProvider user={user}>
             <AuthListener serverUser={user} />

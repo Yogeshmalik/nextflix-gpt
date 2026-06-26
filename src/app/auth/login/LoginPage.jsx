@@ -135,18 +135,18 @@ const LoginPage = () => {
     emailValidateError !== null || passwordValidateError !== null;
 
   return (
-    <div className="space-y-5 w-full max-w-100 mx-auto h-full my-auto pb-8">
-      <div className="flex flex-col space-y-2">
-        <h1 className="text-white font-bold text-2xl md:text-4xl flex tracking-tight">
+    <div className="space-y-4 sm:space-y-5 px-2 md:space-y-2 lg:space-y-6 w-full max-w-100 mx-auto h-full my-auto py-8">
+      <div className="flex flex-col space-y-2 sm:space-y-1 lg:space-y-2.5">
+        <h1 className="text-white font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl flex tracking-tight">
           Enter your info to sign in
         </h1>
-        <p className="text-gray-400 text-lg md:text-xl flex tracking-tight">
+        <p className="text-gray-400 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl flex tracking-tight">
           Or get started with a new account.
         </p>
       </div>
 
       <form
-        className="flex flex-col space-y-4 items-center w-full"
+        className="flex flex-col space-y-4 md:space-y-3 lg:space-y-5 items-center w-full"
         onSubmit={handleSubmit}
         autoComplete="off"
       >
@@ -156,7 +156,7 @@ const LoginPage = () => {
             name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="flex px-4 py-3 bg-gray-950 font-semibold text-gray-100 border border-gray-700 rounded-md w-full focus:outline-none focus:border-red-600 transition"
+            className="flex px-2.5 py-1.5 lg:px-3 lg:py-2 xl:px-4 xl:py-3 bg-gray-950 font-semibold text-gray-100 border border-gray-700 rounded-md w-full focus:outline-none focus:border-red-600 transition"
             placeholder="Enter Name"
             autoComplete="name"
             required
@@ -170,7 +170,7 @@ const LoginPage = () => {
           value={email}
           onChange={handleEmailChange}
           onBlur={handleEmailBlur}
-          className={`flex px-4 py-3 bg-gray-950 font-semibold text-gray-100 border border-gray-700 rounded-md w-full focus:outline-none transition 
+          className={`flex px-2.5 py-1.5 sm:px-2 sm:py-1 lg:px-3 lg:py-2 xl:px-4 xl:py-3 bg-gray-950 font-semibold text-gray-100 border border-gray-700 rounded-md w-full focus:outline-none transition 
             ${supabaseStatusMessage ? "border-red-600" : "focus:border-white"}`}
           placeholder="Enter Email"
           autoComplete="off"
@@ -187,7 +187,7 @@ const LoginPage = () => {
           value={password}
           onChange={handlePasswordChange}
           onBlur={handlePasswordBlur}
-          className={`flex px-4 py-3 bg-gray-950 font-semibold text-gray-100 border border-gray-700 rounded-md w-full focus:outline-none focus:border-red-600 transition 
+          className={`flex px-2.5 py-1.5 sm:px-2 sm:py-1 lg:px-3 lg:py-2 xl:px-4 xl:py-3 bg-gray-950 font-semibold text-gray-100 border border-gray-700 rounded-md w-full focus:outline-none focus:border-red-600 transition 
             ${supabaseStatusMessage ? "border-red-600" : "focus:border-white"}`}
           placeholder="Enter Password (At least 8 characters)"
           autoComplete="new-password"
@@ -197,12 +197,12 @@ const LoginPage = () => {
           {validatePasswordMessage}
         </span>
 
-        <div className="flex flex-col space-y-2 md:space-y-4 items-center w-full">
+        <div className="flex flex-col space-y-2 py-2 md:space-y-4 items-center w-full text-sm sm:text-base md:text-lg lg:text-xl">
           <button
             type="submit"
             // disabled={isLoading || isFormInvalid}
             disabled={isLoading}
-            className="flex justify-center text-lg md:text-xl cursor-pointer bg-red-600 hover:bg-red-700 disabled:bg-red-700 disabled:opacity-50 text-white font-bold rounded-md w-full px-4 py-3 transition-all ease-in-out duration-200"
+            className="flex justify-center cursor-pointer bg-red-600 hover:bg-red-700 disabled:bg-red-700 disabled:opacity-50 text-white font-bold rounded-md w-full px-2.5 py-1.5 sm:px-2 sm:py-1 lg:px-3 lg:py-2 xl:px-4 xl:py-3 transition-all ease-in-out duration-200"
           >
             {isLoading ? (
               <span className="flex items-center gap-2">

@@ -28,21 +28,24 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 z-50 flex w-full items-center h-auto
-        px-2 pt-[calc(env(safe-area-inset-top,0.75rem))] pb-3
-        md:px-12 md:pt-[calc(env(safe-area-inset-top,0.5rem))] md:pb-2 transition-all duration-200 ease-in-out
+        px-2 pt-[calc(env(safe-area-inset-top,0.75rem)) py-3
+        md:px-12 md:pt-[calc(env(safe-area-inset-top,0.5rem)) md:pb-2 transition-all duration-200 ease-in-out
         ${isScrolled ? "bg-black/70 backdrop-blur-md" : "bg-transparent"}`}
     >
-      <div className="flex md:max-w-7x w-full mx-auto items-center justify-between">
-        <Link href="/browse">
+      <div className="flex md:max-w-7x pt-3 w-full mx-auto items-center justify-between">
+        <Link
+          className=" active:scale-90 transition-all ease-in-out duration-200"
+          href="/browse"
+        >
           <Image
             src={MAIN_LOGO_URL}
             alt="nextflix-logo"
             width={112}
             height={40}
             priority
-            className={` transition-all duration-200 ease-in-out
-              
-              ${isScrolled ? "w-20 md:w-28" : "w-24 md:w-44 h-auto"}`}
+            className={`transition-all duration-200 ease-in-out h-auto ${
+              isScrolled ? "w-20 md:w-28" : "w-24 md:w-44"
+            }`}
           />
         </Link>
         {user && (
